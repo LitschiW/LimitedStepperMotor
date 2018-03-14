@@ -25,6 +25,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/EEPROM/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/Stepper}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/Stepper/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/core/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/EEPROM/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/Stepper}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/Stepper/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.443497931" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
@@ -36,6 +42,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/EEPROM/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/Stepper}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/Stepper/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/core/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/EEPROM/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/Stepper}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/Stepper/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.1439629176" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
@@ -47,6 +59,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/EEPROM/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/Stepper}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Rolltor/libraries/Stepper/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/core/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/EEPROM/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/Stepper}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LimitedStepper/libraries/Stepper/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.232850630" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>
