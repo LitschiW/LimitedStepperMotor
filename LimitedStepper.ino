@@ -54,7 +54,6 @@ void loop()
   //Eingaenge verarbeiten
   if (digitalRead(Pin_ManuelleKalibrierungTrigger) == 1)
   {
-    delay(1000);
     motor.calibrateLimitManually(Pin_ManuelleKalibrierungTrigger);
   }
   else if (digitalRead(Pin_HochfahrTrigger) == 1)

@@ -15,6 +15,7 @@
 class LimitedStepperMotor: public Stepper {
 public:
 	unsigned int Limit = 1;
+	unsigned int CurrentSteps = 0; //die aktuelle Schritt Position
 
 	LimitedStepperMotor(int EEPROMIndex, int number_of_steps, int motor_pin_1,
 			int motor_pin_2);
@@ -44,7 +45,9 @@ public:
 
 	bool moveToZero();
 
-	void step(int steps);
+	bool moveToPosition(int position);
+
+	bool step(int steps);
 
 	/*Lässt den Motor folgende Bewegung ausführen:
 	 * 	- Nullstellung (mit Kalibierung)
@@ -72,7 +75,6 @@ public:
 
 private:
 	int deactivationPin = 0; // Pinnummer des Endschalter-Signals
-	unsigned int currentLocation = 0; //die aktuelle Schritt Position
 	int EEPROMIndex; //EEPROM Addresse an der das limit gespeichert werden soll
 
 	//Diese Variablen werden beim invertieren umgedreht

@@ -26,25 +26,25 @@ LimitedStepperMotor::LimitedStepperMotor(int EEPROMIndex, int number_of_steps,
 /*Laesst den Motor die angegebene Zahl an Schritten ausfuehren.
  Eine negative Anzahl von Schritten laesst den Motor rueckwaerts laufen.
  Die gesetzten Einschraenkungen von Null- und Grenzsetllung werden eingehalten.*/
-void LimitedStepperMotor::step(int steps) {
+bool LimitedStepperMotor::step(int steps) {
 	int direction = steps > 0; //Richtung bestimmen
 	int numberOfSteps = abs(steps); // Anzahl der Schritte bestimmen
 
 	for (int i = 0; i < numberOfSteps && !stop; ++i) {
-		if ((currentLocation == Limit && direction = 1)
-				|| (currentLocation == 0 && direction = 0))
+		if ((CurrentSteps == Limit && direction = 1)
+				|| (CurrentSteps == 0 && direction = 0))
 			break;
 
 		if (direction == 1) {
 			Stepper::step(singleDownStep);
-			currentLocation++;
+			CurrentSteps++;
 		}
 		if (direction == 0) {
 			Stepper::step(singleUpStep);
-			currentLocation--;
+			CurrentSteps--;
 		}
 	}
-	stop = false;
+	return fixStop();
 }
 
 /*
@@ -56,7 +56,7 @@ bool LimitedStepperMotor::calibrateZeroing() {
 		Stepper::step(singleUpStep);
 	}
 	if (!stop)
-		currentLocation = 0;
+		CurrentSteps = 0;
 	return fixStop();
 }
 
@@ -88,13 +88,16 @@ bool LimitedStepperMotor::calibrateLimitManually(int stoppingPin) {
 	//backup machen falls abgebrochen wird
 	int oldLimit = Limit;
 	Limit = 0;
-	if(!calibrateZeroing()){Limit = oldLimit; return false; }; //zurueckstellen auf die Nullstellung
+	if (!calibrateZeroing()) {
+		Limit = oldLimit;
+		return false;
+	}; //zurueckstellen auf die Nullstellung
 
-	while (digitalRead(stoppingPin) != 1 &&!stop) {
+	while (digitalRead(stoppingPin) != 1 && !stop) {
 		Stepper::step(singleDownStep);
 		Limit++;
 	}
-	if(stop) { //falls von außen abgebrochen werden sollte wird das limit zurueckgesetzt
+	if (stop) { //falls von außen abgebrochen werden sollte wird das limit zurueckgesetzt
 		Limit = oldLimit;
 		return fixStop();
 	}
@@ -105,18 +108,31 @@ bool LimitedStepperMotor::calibrateLimitManually(int stoppingPin) {
 
 /*Stellt den Motor an die oberste Position*/
 bool LimitedStepperMotor::moveToZero() {
-	while (currentLocation != 0 && !stop) {
+	while (CurrentSteps != 0 && !stop) {
 		Stepper::step(singleUpStep);
-		currentLocation--;
+		CurrentSteps--;
 	}
 	return fixStop();
 }
 
 /*Stellt den Motor an die unterste Position*/
 bool LimitedStepperMotor::moveToLimit() {
-	while (currentLocation != Limit && !stop) {
+	while (CurrentSteps != Limit && !stop) {
 		Stepper::step(singleDownStep);
-		currentLocation++;
+		CurrentSteps++;
+	}
+	return fixStop();
+}
+
+bool LimitedStepperMotor::moveToPosition(int position) {
+	if (position == CurrentSteps)
+		return true;
+
+	while (position > CurrentSteps && !stop) {
+		step(-1);
+	}
+	while (position < CurrentSteps && !stop) {
+		step(1);
 	}
 	return fixStop();
 }
