@@ -1,6 +1,6 @@
 #include "Arduino.h"
 
-#include "Controller/LimitedStepperMotor.h"
+#include "LimitedStepperMotor.h"
 
 /*Einstellungen Motor*/
 

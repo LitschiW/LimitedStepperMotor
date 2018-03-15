@@ -16,3 +16,4 @@
 *.elf
 *.eep
 arduino.ar
+/Controller/
