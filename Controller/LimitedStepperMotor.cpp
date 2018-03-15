@@ -23,76 +23,107 @@ LimitedStepperMotor::LimitedStepperMotor(int EEPROMIndex, int number_of_steps,
 	this->EEPROMIndex = EEPROMIndex;
 }
 
-/*Lï¿½sst den Motor die angegebene Zahl an Schritten ausfï¿½hren.
- Eine negative Anzahl von Schritten lï¿½sst den Motor rï¿½ckwï¿½rts laufen.
- Die gesetzten einschrï¿½nkungen werden eingehalten.*/
-void LimitedStepperMotor::step(int numberOfSteps) {
-	int direction = numberOfSteps > 0;
-	numberOfSteps = abs(numberOfSteps);
+/*Laesst den Motor die angegebene Zahl an Schritten ausfuehren.
+ Eine negative Anzahl von Schritten laesst den Motor rueckwaerts laufen.
+ Die gesetzten Einschraenkungen von Null- und Grenzsetllung werden eingehalten.*/
+void LimitedStepperMotor::step(int steps) {
+	int direction = steps > 0; //Richtung bestimmen
+	int numberOfSteps = abs(steps); // Anzahl der Schritte bestimmen
 
-	for (int i = 0; i < numberOfSteps; ++i) {
-		if (currentLocation == limit || currentLocation == 0)
+	for (int i = 0; i < numberOfSteps && !stop; ++i) {
+		if ((currentLocation == Limit && direction = 1)
+				|| (currentLocation == 0 && direction = 0))
 			break;
 
-		if (direction == 1) { //Tor bewegt sich nach unten
+		if (direction == 1) {
 			Stepper::step(singleDownStep);
 			currentLocation++;
 		}
-		if (direction == 0) { //Tor bewegt sich nach oben
+		if (direction == 0) {
 			Stepper::step(singleUpStep);
 			currentLocation--;
 		}
 	}
+	stop = false;
 }
 
 /*
  * Setzt die Position des Motors wieder auf 0.
  * Nutzt den angegebenen Endschalter zur Erkennung.
  */
-void LimitedStepperMotor::calibrateZeroing() {
-	while (digitalRead(deactivationPin) != 0) {
+bool LimitedStepperMotor::calibrateZeroing() {
+	while (digitalRead(deactivationPin) != 0 && !stop) {
 		Stepper::step(singleUpStep);
 	}
-	currentLocation = 0;
+	if (!stop)
+		currentLocation = 0;
+	return fixStop();
 }
 
 /*
  Startet das manuelle kalibrieren.
- Wenn nach einer halben Sekunde der Knopf noch gedrï¿½ckt ist, wird abgebrochen.
- Ansonsten bewegt sich der Motor solange nach unten bis der Knopf erneut gedrï¿½ckt wird.
- Die Position wird im EEPROM gespeichert und beim nï¿½chsten starten neu ausgelesen.
+ Wenn der Knopf länger als eine halbe Sekunde gedrückt wird, wird abgebrochen.
+ Ansonsten bewegt sich der Motor solange nach unten bis der Knopf erneut gedrueckt wird.
+ Die Position wird im EEPROM gespeichert und beim naechsten starten neu ausgelesen.
+
+ Rueckgabe: true im Normalfall - false falls in irgend einer Form abgebrochen wurde
  */
-void LimitedStepperMotor::calibrateLimitManually(int stoppingPin) {
-	pinMode(stoppingPin, INPUT); //Eingangangsmodus fï¿½r Pin sicherstellen.
+bool LimitedStepperMotor::calibrateLimitManually(int stoppingPin) {
+	pinMode(stoppingPin, INPUT); //Eingangangsmodus fuer Pin sicherstellen.
+	long callTime = millis();
 
-	delay(500);
-	if (digitalRead(stoppingPin) == 1)
-		return;
+	/*Abbrechen behandeln*/
+	do {
+		if (digitalRead(stoppingPin) == 0) {
+			break;
+		}
+	} while (millis() - callTime <= 500);
 
-	limit = 0;
-	calibrateZeroing(); //zurï¿½ckstellen auf die oberste Position.
+	while (digitalRead(stoppingPin) == 1) {
+		callTime = -1;
+	}
+	if (callTime == -1)
+		return false;
 
-	while (digitalRead(stoppingPin) != 1) {
+	//backup machen falls abgebrochen wird
+	int oldLimit = Limit;
+	Limit = 0;
+	if(!calibrateZeroing()){Limit = oldLimit; return false; }; //zurueckstellen auf die Nullstellung
+
+	while (digitalRead(stoppingPin) != 1 &&!stop) {
 		Stepper::step(singleDownStep);
-		limit++;
+		Limit++;
+	}
+	if(stop) { //falls von außen abgebrochen werden sollte wird das limit zurueckgesetzt
+		Limit = oldLimit;
+		return fixStop();
 	}
 	saveLimit();
-	moveToZero(); //Wieder ganz nach oben stellen.
+	moveToZero(); //wieder auf die Nullstellung gehen
+	return true;
 }
 
 /*Stellt den Motor an die oberste Position*/
-void LimitedStepperMotor::moveToZero() {
-	while (currentLocation != 0) {
+bool LimitedStepperMotor::moveToZero() {
+	while (currentLocation != 0 && !stop) {
 		Stepper::step(singleUpStep);
 		currentLocation--;
 	}
+	return fixStop();
 }
 
 /*Stellt den Motor an die unterste Position*/
-void LimitedStepperMotor::moveToLimit() {
-	while (currentLocation != limit) {
+bool LimitedStepperMotor::moveToLimit() {
+	while (currentLocation != Limit && !stop) {
 		Stepper::step(singleDownStep);
 		currentLocation++;
 	}
+	return fixStop();
+}
+
+void LimitedStepperMotor::test() {
+	calibrateZeroing();
+	moveToLimit();
+	moveToZero();
 }
 
