@@ -1,3 +1,5 @@
+#include "libraries/StandardCplusplus/StandardCplusplus.h"
+
 /*
  * MultiLimtedStepperController.cpp
  *
@@ -8,7 +10,7 @@
 #include "MultiLimtedStepperController.h"
 
 MultiLimtedStepperController::MultiLimtedStepperController() {
-
+  
 }
 
 void MultiLimtedStepperController::AddMotor(int index,
@@ -16,31 +18,14 @@ void MultiLimtedStepperController::AddMotor(int index,
 	if (index < 0 || index >= arraySize)
 		return;
 
-	//Stellt sicher, dass das array groß genug ist
-	if (motorCount + 1 > arraySize) {
-		LimitedStepperMotor newArray[arraySize * 2];
-		for (int i = 0; i < arraySize; i++) {
-			newArray[i] = motors[i];
-		}
-		arraySize *= 2;
-		motors = newArray;
-	}
-
-	//Macht Platz zum Einfügen.
-	for (int i = arraySize - 1; i > index; i--) {
-		motors[i] = motors[i - 1];
-	}
-
-	//Einfügen
+	
+	//Einfï¿½gen
 	motors[index] = motor;
 	motorCount++;
 }
 
 void MultiLimtedStepperController::RemoveMotor(int index) {
-	for (int i = index; i < arraySize - 1; i++) {
-		motors[i] = motors[i + 1];
-	}
-	motors[motorCount - 1] = null;
+	
 	motorCount--;
 }
 
