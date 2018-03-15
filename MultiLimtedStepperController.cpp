@@ -1,5 +1,3 @@
-#include "libraries/StandardCplusplus/StandardCplusplus.h"
-
 /*
  * MultiLimtedStepperController.cpp
  *
@@ -10,53 +8,41 @@
 #include "MultiLimtedStepperController.h"
 
 MultiLimtedStepperController::MultiLimtedStepperController() {
-  
+
 }
 
-void MultiLimtedStepperController::AddMotor(int index,
-		LimitedStepperMotor motor) {
-	if (index < 0 || index >= arraySize)
-		return;
-
-	
-	//Einf�gen
-	motors[index] = motor;
-	motorCount++;
+void MultiLimtedStepperController::AddMotor(LimitedStepperMotor motor) {
+	motors.push_back(motor);
 }
 
-void MultiLimtedStepperController::RemoveMotor(int index) {
-	
-	motorCount--;
+void MultiLimtedStepperController::Clear() {
+	motors.clear();
 }
 
 void MultiLimtedStepperController::StopMovement() {
-	for (int i = 0; i < motorCount; i++) {
-		motors[i].stopMovement();
+	for (int i = 0; i < motors.size(); i++) {
+		motors.at(i).stopMovement();
 	}
 }
 
 void MultiLimtedStepperController::MoveTo0(int index) {
-	if (index < 0 || index >= motorCount)
-		return;
-	motors[index].moveToZero();
+	motors.at(index).moveToZero();
 }
 
 void MultiLimtedStepperController::MoveToLimit(int index) {
-	if (index < 0 || index >= motorCount)
-		return;
-	motors[index].moveToLimit();
+	motors.at(index).moveToLimit();
 }
 
 void MultiLimtedStepperController::MoveAllTo0Serial() {
-	for (int i = 0; i < motorCount; ++i) {
-		if (!motors[i].moveToZero())
+	for (int i = 0; i < motors.size(); ++i) {
+		if (!motors.at(i).moveToZero())
 			break;
 	}
 }
 
 void MultiLimtedStepperController::MoveAllToLimitSerial() {
-	for (int i = 0; i < motorCount; ++i) {
-		if (!motors[i].moveToLimit())
+	for (int i = 0; i < motors.size(); ++i) {
+		if (!motors.at(i).moveToLimit())
 			break;
 	}
 }
@@ -64,8 +50,8 @@ void MultiLimtedStepperController::MoveAllToLimitSerial() {
 void MultiLimtedStepperController::MoveAllTo0Parallel(bool timed) {
 	if (timed) {
 		for (double i = 1000; i <= 0; i--) {
-			for (int j = 0; j < motorCount; j++) {
-				LimitedStepperMotor motor = motors[j];
+			for (int j = 0; j < motors.size(); j++) {
+				LimitedStepperMotor motor = motors.at(j);
 
 				unsigned int targetSteps = motor.Limit * i / 1000;
 				if (targetSteps < motor.CurrentSteps
@@ -78,9 +64,9 @@ void MultiLimtedStepperController::MoveAllTo0Parallel(bool timed) {
 	} else {
 		bool needsChange = false;
 		do {
-			for (int j = 0; j < motorCount; j++) {
-				LimitedStepperMotor motor = motors[j];
-				if (!motors[j].step(-1))
+			for (int j = 0; j < motors.size(); j++) {
+				LimitedStepperMotor motor = motors.at(j);
+				if (!motor.step(-1))
 					return;
 				needsChange |= motor.CurrentSteps != 0;
 			}
@@ -92,8 +78,8 @@ void MultiLimtedStepperController::MoveAllToLimitParallel(bool timed) {
 
 	if (timed) {
 		for (double i = 0; i <= 1000; i++) {
-			for (int j = 0; j < motorCount; j++) {
-				LimitedStepperMotor motor = motors[j];
+			for (int j = 0; j < motors.size(); j++) {
+				LimitedStepperMotor motor = motors.at(j);
 
 				unsigned int targetSteps = motor.Limit * i / 1000;
 				if (targetSteps > motor.CurrentSteps
@@ -106,9 +92,9 @@ void MultiLimtedStepperController::MoveAllToLimitParallel(bool timed) {
 	} else {
 		bool needsChange = false;
 		do {
-			for (int j = 0; j < motorCount; j++) {
-				LimitedStepperMotor motor = motors[j];
-				if (!motors[j].step(1))
+			for (int j = 0; j < motors.size(); j++) {
+				LimitedStepperMotor motor = motors.at(j);
+				if (!motor.step(1))
 					return;
 				needsChange |= motor.CurrentSteps != motor.Limit;
 			}

@@ -9,20 +9,20 @@
 #define CONTROLLER_MULTILIMTEDSTEPPERCONTROLLER_H_
 
 #include "LimitedStepperMotor.h"
+#include <libraries/StandardCplusplus/vector>
+using namespace std;
 
 class MultiLimtedStepperController {
 public:
 	MultiLimtedStepperController();
 
-	/* Fuegt einen Motor am angegebenen Index ein.
-	 * Ist an jenem Index schon ein Motor vorhanden wird dieser nach Hinten geschoben.
-	 * Der Index kann maximal so gross sein, wie der im Konsturktor angegebene MaxMotorCount-1
-	 * und er beginnt bei 0;
+	/*
+	 * Registriert den Motor für die Steuerung.
 	 */
-	void AddMotor(int index, LimitedStepperMotor motor);
+	void AddMotor(LimitedStepperMotor motor);
 
-	/*Versucht einen Motor vom angegebenen Index zu entfernen. */
-	void RemoveMotor(int index);
+	/*Deregistiert alle vorhanden motoren*/
+	void Clear();
 
 	/*Bewegt den Motor am angegeben Index in die Nullstellung*/
 	void MoveTo0(int index);
@@ -47,7 +47,7 @@ public:
 	void StopMovement();
 
 private:
-	LimitedStepperMotor motors[];
+	vector<LimitedStepperMotor> motors;
 	int motorCount=0;
 	int arraySize =2;
 };
