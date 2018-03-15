@@ -45,7 +45,7 @@ public:
 
 	bool moveToZero();
 
-	bool moveToPosition(int position);
+	bool moveToPosition(unsigned int position);
 
 	bool step(int steps);
 
@@ -65,11 +65,11 @@ public:
 	/*Kann genutzt werden um den Schrittmotor zu invertieren.*/
 	void setInverted(bool inverted) {
 		if (inverted) {
-			singleDownStep = -1;
-			singleUpStep = 1;
+			singleToLimitStep = -1;
+			singleTo0Step = 1;
 		} else {
-			singleDownStep = 1;
-			singleUpStep = -1;
+			singleToLimitStep = 1;
+			singleTo0Step = -1;
 		}
 	}
 
@@ -78,8 +78,8 @@ private:
 	int EEPROMIndex; //EEPROM Addresse an der das limit gespeichert werden soll
 
 	//Diese Variablen werden beim invertieren umgedreht
-	int singleDownStep = 1; //Beschreibt die Anzahl an Schritten die einem Schritt nach unten entsprechen soll
-	int singleUpStep = -1; //Beschreibt die Anzahl an Schritten die einem Schritt nach oben entsprechen soll
+	int singleToLimitStep = 1; //Beschreibt die Anzahl an Schritten die einem Schritt nach unten entsprechen soll
+	int singleTo0Step = -1; //Beschreibt die Anzahl an Schritten die einem Schritt nach oben entsprechen soll
 
 	bool stop = false;
 
