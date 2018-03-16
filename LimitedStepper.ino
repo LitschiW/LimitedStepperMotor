@@ -10,20 +10,20 @@ const int EEPROMCell = 0;
 const int number_of_Steps = 4800;
 //Pins mit den der Motor/Driver/die Steuereinheit verbunden ist (ggf. auf 2 verringern)
 const int Pins_StepperMotor[] = {8, 9, 10, 11};
-//invertiert Hoch und Runter fuer den Motor
+//invertiert die Motorrichtung
 const bool invertiereMotor = false;
 //Grundgeschwindigkeit des Motors in Umdrehungen pro Minute.
-const int speed = 120;
+const int geschwindigkeit = 120;
 
 /*Einstellungen Eingaenge*/
 
 //eingang des Endschalters
 const int Pin_Endschalter = 2;
-//Eingang der das manuelle Kalibrieren starten soll.
+//Eingang der das manuelle Kalibrieren starten und beenden soll.
 const int Pin_ManuelleKalibrierungTrigger = 3;
-//Eingang der das Hochfahren ausloesen soll
+//Eingang der das fahren zur Nullstellung ausloesen soll
 const int Pin_HochfahrTrigger = 4;
-//Eingang der das Runterfahren ausloesen soll
+//Eingang der das fahren zur Endstellung ausloesen soll
 const int Pin_RunterfahrTrigger = 5;
 
 
@@ -42,7 +42,7 @@ void setup()
   //motor Konfiguration von oben uebernehmen
   motor.setDeactivationPin(Pin_Endschalter);
   motor.setInverted(invertiereMotor);
-  motor.setSpeed(speed);
+  motor.setSpeed(geschwindigkeit);
 
   //startet die Kalibrierung des oberen Anschlags (s. in der Klasse LimitedStepperMotor.cpp)
   motor.calibrateZeroing();
