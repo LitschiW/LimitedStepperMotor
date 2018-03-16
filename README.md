@@ -25,6 +25,7 @@
   - Geschriebener Code sollte kommentiert und ausreichend lesbar formatiert(Arduino IDE = strg+T, Eclipse = strg+umschlat+F) sein.
   - Größere Änderungen sollten auf einem extra Git-Zweig stattfinden und später gemerget werden.
   - Der Code muss immer von beiden IDE's kompilierbar sein. Dies sollte regelmäßig geprüft werden.
+  - Klassen sollten nur in der obersten Ebene (also dem Ordner in der die .ino liegt) erstellt werden.
   
 ## Probleme/Issues
   Falls Probleme auftreten oder Hilfe benötigt wird, kann man unter dem Tab ["Issues"](https://github.com/LitschiW/LimitedStepperMotor/issues) ein neues Issue mit Name, Beschreibung und Problemtyp (s. [Labels](https://github.com/LitschiW/LimitedStepperMotor/labels)) erstellt werden.
