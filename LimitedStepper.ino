@@ -1,9 +1,5 @@
 #include "Arduino.h"
 #include "LimitedStepperMotor.h"
-#include "StandardCplusplus.h"
-#include <vector>
-
-using namespace std;
 
 /*Einstellungen Motor*/
 
@@ -35,7 +31,6 @@ LimitedStepperMotor motor(EEPROMCell, number_of_Steps, Pins_StepperMotor[0], Pin
 
 void setup()
 {
-	vector<int> vec;
   //Eingaenge auf INPUT schalten
   pinMode(Pin_Endschalter, INPUT);
   pinMode(Pin_ManuelleKalibrierungTrigger, INPUT);
