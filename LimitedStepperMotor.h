@@ -28,7 +28,6 @@ public:
 		deactivationPin = pin;
 		pinMode(pin, INPUT);
 	}
-	;
 
 	bool calibrateZeroing();
 
@@ -36,7 +35,6 @@ public:
 	void setMaxStepNumber(unsigned int steps) {
 		Limit = steps;
 	}
-	;
 
 	/*startet die manuelle Kalibierung*/
 	bool calibrateLimitManually(int activationPin);

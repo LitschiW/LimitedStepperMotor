@@ -1,6 +1,9 @@
 #include "Arduino.h"
-
 #include "LimitedStepperMotor.h"
+#include "StandardCplusplus.h"
+#include <vector>
+
+using namespace std;
 
 /*Einstellungen Motor*/
 
@@ -21,9 +24,9 @@ const int geschwindigkeit = 120;
 const int Pin_Endschalter = 2;
 //Eingang der das manuelle Kalibrieren starten und beenden soll.
 const int Pin_ManuelleKalibrierungTrigger = 3;
-//Eingang der das fahren zur Nullstellung ausloesen soll
+//Eingang der das Fahren zur Nullstellung ausloesen soll
 const int Pin_HochfahrTrigger = 4;
-//Eingang der das fahren zur Endstellung ausloesen soll
+//Eingang der das Fahren zur Endstellung ausloesen soll
 const int Pin_RunterfahrTrigger = 5;
 
 
@@ -32,13 +35,14 @@ LimitedStepperMotor motor(EEPROMCell, number_of_Steps, Pins_StepperMotor[0], Pin
 
 void setup()
 {
+	vector<int> vec;
   //Eingaenge auf INPUT schalten
   pinMode(Pin_Endschalter, INPUT);
   pinMode(Pin_ManuelleKalibrierungTrigger, INPUT);
   pinMode(Pin_HochfahrTrigger, INPUT);
   pinMode(Pin_RunterfahrTrigger, INPUT);
 
-  //motor Konfiguration von oben uebernehmen
+  //Motor Konfiguration uebernehmen
   motor.setDeactivationPin(Pin_Endschalter);
   motor.setInverted(invertiereMotor);
   motor.setSpeed(geschwindigkeit);
