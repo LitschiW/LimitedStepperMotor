@@ -4,8 +4,6 @@
  Created on: 14.03.2018
  Author: Lion
  */
-
-
 #include "EEPROM.h"
 #include "Arduino.h"
 #include "LimitedStepperMotor.h"
@@ -14,6 +12,7 @@ LimitedStepperMotor::LimitedStepperMotor(int EEPROMIndex, int number_of_steps,
 		int motor_pin_1, int motor_pin_2) :
 		Stepper(number_of_steps, motor_pin_1, motor_pin_2) {
 	this->EEPROMIndex = EEPROMIndex;
+  loadLimit();  
 }
 
 LimitedStepperMotor::LimitedStepperMotor(int EEPROMIndex, int number_of_steps,
@@ -21,6 +20,7 @@ LimitedStepperMotor::LimitedStepperMotor(int EEPROMIndex, int number_of_steps,
 		Stepper(number_of_steps, motor_pin_1, motor_pin_2, motor_pin_3,
 				motor_pin_4) {
 	this->EEPROMIndex = EEPROMIndex;
+  loadLimit();
 }
 
 /*Laesst den Motor die angegebene Zahl an Schritten ausfuehren.
@@ -62,7 +62,7 @@ bool LimitedStepperMotor::calibrateZeroing() {
 
 /*
  Startet das manuelle kalibrieren.
- Wenn der Knopf länger als eine halbe Sekunde gedrückt wird, wird abgebrochen.
+ Wenn der Knopf lï¿½nger als eine halbe Sekunde gedrï¿½ckt wird, wird abgebrochen.
  Ansonsten bewegt sich der Motor solange nach unten bis der Knopf erneut gedrueckt wird.
  Die Position wird im EEPROM gespeichert und beim naechsten starten neu ausgelesen.
 
@@ -97,7 +97,7 @@ bool LimitedStepperMotor::calibrateLimitManually(int stoppingPin) {
 		Stepper::step(singleToLimitStep);
 		Limit++;
 	}
-	if (stop) { //falls von außen abgebrochen werden sollte wird das limit zurueckgesetzt
+	if (stop) { //falls von aussen abgebrochen werden sollte wird das limit zurueckgesetzt
 		Limit = oldLimit;
 		return fixStop();
 	}

@@ -38,7 +38,7 @@ public:
 	}
 	;
 
-	/*startet die manuelle calibierung*/
+	/*startet die manuelle Kalibierung*/
 	bool calibrateLimitManually(int activationPin);
 
 	bool moveToLimit();
@@ -49,16 +49,16 @@ public:
 
 	bool step(int steps);
 
-	/*Lässt den Motor folgende Bewegung ausführen:
+	/*Laesst den Motor folgende Bewegung ausfuehren:
 	 * 	- Nullstellung (mit Kalibierung)
 	 * 	- Endstellung
 	 * 	- Nullstellung
 	 */
 	void test();
 
-	/* Bietet die Moeglichkeit von den Motor während der Bewegung zu stoppen.
+	/* Bietet die Moeglichkeit von den Motor waehrend der Bewegung zu stoppen.
 	 * Es ist zu beachten, dass die Bewegung eines Motors ein blockierender Aufruf ist.
-	 * D.h. es macht nur Sinn diese Methode von einem parallen task o.ä. aufzurufen.
+	 * D.h. es macht nur Sinn diese Methode von einem parallen task o.ï¿½. aufzurufen.
 	 */
 	void stopMovement(){stop = true;};
 
@@ -90,7 +90,7 @@ private:
 	void loadLimit() {
 		int newLimit = EEPROM.read(EEPROMIndex);
 		if (newLimit <= 0)
-			newLimit = 0; //stellt sicher, dass das limit mindestens 0 ist.
+			newLimit = 1; //stellt sicher, dass das limit mindestens 0 ist.
 		Limit = newLimit;
 	}
 

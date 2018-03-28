@@ -6,7 +6,7 @@
 
 //Speicherort im EEPROM
 const int EEPROMCell = 0;
-//Schritte des Schrittmotors (sollte irgendow drauf bzw. in der Beschreibung stehen)
+//Schritte des Schrittmotors (sollte irgendwo drauf bzw. in der Beschreibung stehen)
 const int number_of_Steps = 4800;
 //Pins mit den der Motor/Driver/die Steuereinheit verbunden ist (ggf. auf 2 verringern)
 const int Pins_StepperMotor[] = {8, 9, 10, 11};
@@ -30,7 +30,6 @@ const int Pin_RunterfahrTrigger = 5;
 //Motor anlegen, evtl muss hier ebenfalls auf 2 Pins umgestellt werden.
 LimitedStepperMotor motor(EEPROMCell, number_of_Steps, Pins_StepperMotor[0], Pins_StepperMotor[1], Pins_StepperMotor[2], Pins_StepperMotor[3]);
 
-//The setup function is called once at startup of the sketch
 void setup()
 {
   //Eingaenge auf INPUT schalten
@@ -48,7 +47,6 @@ void setup()
   motor.calibrateZeroing();
 }
 
-// The loop function is called in an endless loop
 void loop()
 {
   //Eingaenge verarbeiten
