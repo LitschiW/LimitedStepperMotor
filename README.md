@@ -28,7 +28,10 @@
   - Klassen sollten nur in der obersten Ebene (also dem Ordner in der die .ino liegt) erstellt werden.
 
 ## Bibliotheken einbinden
- [klick](https://stackoverflow.com/questions/29051576/how-do-i-add-arduino-libraries-to-eclipse-project)
+### Eclipse
+Einige standart Bibliotheken sind unter "Arduino-> Add libary to selected Project" vorhanden.
+
+Nicht vorhandene und benutzte Bibliotheken sollten im Ordner "libaries" abgelegt werden. Für Eclipsenutzer muss eine Referenze für den Compiler angelegt werden:  Arduino->Add source folder to selected Project->Bibliotheksordner auswählen oder [alternativ].(https://stackoverflow.com/questions/29051576/how-do-i-add-arduino-libraries-to-eclipse-project).
 
 ## Probleme/Issues
   Falls Probleme auftreten oder Hilfe benötigt wird, kann man unter dem Tab ["Issues"](https://github.com/LitschiW/LimitedStepperMotor/issues) ein neues Issue mit Name, Beschreibung und Problemtyp (s. [Labels](https://github.com/LitschiW/LimitedStepperMotor/labels)) erstellt werden.
