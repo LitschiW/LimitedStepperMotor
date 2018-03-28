@@ -8,7 +8,7 @@
 #ifndef CONTROLLER_LIMITEDSTEPPERMOTOR_H_
 #define CONTROLLER_LIMITEDSTEPPERMOTOR_H_
 
-#include <Stepper.h>
+#include "Stepper.h"
 #include "Arduino.h"
 #include "EEPROM.h"
 
