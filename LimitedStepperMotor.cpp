@@ -36,7 +36,7 @@ bool LimitedStepperMotor::step(int steps, bool forced) {
 
   for (int i = 0; i < numberOfSteps && !stop; ++i) {
     if (!forced &&
-        ((CurrentSteps == Limit && direction == 1) || ((CurrentSteps == 0 || digitalRead(deactivationPin) == 1) && direction == 0)))
+        ((CurrentSteps == Limit && direction == 1) || ( digitalRead(deactivationPin) == 1 && direction == 0)))
       return false;
 
     if (direction == 1) {
@@ -48,7 +48,7 @@ bool LimitedStepperMotor::step(int steps, bool forced) {
       CurrentSteps--;
     }
   }
-  if (Serial && CurrentSteps % 25  == 0) {
+  if (Serial && CurrentSteps % 50  == 0) {
     Serial.print("Steps: ");
     Serial.println(CurrentSteps);
   }

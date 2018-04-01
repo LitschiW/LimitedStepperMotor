@@ -1,4 +1,4 @@
-#include "Arduino.h"
+ #include "Arduino.h"
 #include "LimitedStepperMotor.h"
 
 /*Einstellungen Motor*/
@@ -6,13 +6,13 @@
 //Speicherort im EEPROM
 const int EEPROMCell = 0;
 //Schritte des Schrittmotors (sollte irgendwo drauf bzw. in der Beschreibung stehen)
-const int number_of_Steps = 60;
+const int number_of_Steps = 24;
 //Pins mit den der Motor/Driver/die Steuereinheit verbunden ist (ggf. auf 2 verringern)
 const int Pins_StepperMotor[] = {8, 9, 10, 11};
 //invertiert die Motorrichtung
 const bool invertiereMotor = false;
 //Grundgeschwindigkeit des Motors in Umdrehungen pro Minute.
-const int geschwindigkeit = 60;
+const int geschwindigkeit = 500;
 
 /*Einstellungen Eingaenge*/
 
@@ -57,8 +57,7 @@ void loop()
   //Eingaenge verarbeiten
   if (digitalRead(Pin_ManuelleKalibrierungTrigger) == 1)
   {
-    motor->moveToPositionPercentage(0.80);
-    //motor->calibrateLimitManually(Pin_ManuelleKalibrierungTrigger);
+    motor->calibrateLimitManually(Pin_ManuelleKalibrierungTrigger);
   }
   else if (digitalRead(Pin_HochfahrTrigger) == 1)
   {
