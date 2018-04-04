@@ -12,9 +12,3 @@
 
 /subdir.mk
 
-*.hex
-*.elf
-*.eep
-arduino.ar
-/Controller/
-/StandardCplusplus/
