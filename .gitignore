@@ -34,3 +34,5 @@
 \.settings/
 
 \.ino\.cpp
+
+Release/
